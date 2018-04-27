@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Person>
+
+@{
+    var requestId = ViewContext.RouteData.Values["id"];
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Person item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @using (Html.BeginForm("RemovePerson", "Courses",
+                        new {
+                            id = item.Id,
+                            requestId = requestId,
+                            isStudent = ViewData["isStudent"],
+                            redirect = Request.Url.AbsolutePath
+                        }, FormMethod.Post, null))
+                    {
+                        <input type="submit" value="Remove From Course" class="btn btn-default" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,40 @@
+﻿@model MvcDatabase.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IEnumerable<Assignment> assignments = Model.Assignments;
+}
+
+<h2>Details for @Model.Name</h2>
+
+<div>
+    <h4>@Model.Name Assignments</h4>
+    <hr />
+    @if (Model.Assignments != null)
+    {
+        Html.RenderPartial("_AssignmentsTable", Model.Assignments);
+    }
+    <h4>@Model.Name Teachers</h4>
+    <hr />
+    @if (Model.Teachers != null)
+    {
+        Html.RenderPartial("_PeopleTable", Model.Teachers, 
+            new ViewDataDictionary {
+                { "CourseId", Model.Id }
+            });
+    }
+    <h4>@Model.Name Students</h4>
+    <hr />
+    @if (Model.Students != null)
+    {
+        Html.RenderPartial("_PeopleTable", Model.Students, 
+            new ViewDataDictionary {
+                { "CourseId", Model.Id }
+            });
+    }
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

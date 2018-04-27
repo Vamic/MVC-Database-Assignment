@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Course>
+
+@{
+    var currentController = ViewContext.RouteData.GetRequiredString("controller");
+    var requestId = ViewContext.RouteData.Values["id"];
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Course item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveCourse", currentController,
+                    new {
+                        id = item.Id,
+                        requestId = requestId,
+                        redirect = Request.Url.AbsolutePath
+                    }, FormMethod.Post, null))
+                {
+                    <input type="submit" value="Remove" class="btn btn-default" />
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

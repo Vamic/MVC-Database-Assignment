@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Course>
+
+@{
+    var currentController = ViewContext.RouteData.GetRequiredString("controller");
+    var requestId = ViewContext.RouteData.Values["id"];
+}
+
+@using (Html.BeginForm("AddCourses", currentController))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        <label for="multi-select-people">Select courses to add</label>
+        @Html.ListBox("courseIds", Model.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList(), new { id = "multi-select-people", @class = "form-control" })
+    </div>
+    @Html.Hidden("id", requestId);
+    <input type="submit" value="Add" />
+}

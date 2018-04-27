@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Person>
+
+@{
+    var requestId = ViewContext.RouteData.Values["id"];
+}
+
+@using (Html.BeginForm("AddPeople", "Courses"))
+{
+    bool isStudent = (bool)ViewData["isStudent"];
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        <label for="multi-select-people">Select @(isStudent ? "students" : "teachers") to add</label>
+        @Html.ListBox("peopleIds", Model.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList(), new { id = "multi-select-people", @class = "form-control" })
+    </div>
+    @Html.Hidden("id", requestId);
+    @Html.Hidden("isStudent", isStudent);
+    <input type="submit" value="Add To Course" />
+}

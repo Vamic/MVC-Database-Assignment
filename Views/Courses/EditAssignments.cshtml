@@ -1,0 +1,24 @@
+﻿@model Course
+
+@{
+    ViewBag.Title = "Edit Assignments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Assignments</h2>
+
+<p>
+    @Html.Partial("_CreateAssignment", new Assignment(),
+        new ViewDataDictionary {
+            { "CourseId", Model.Id }
+        })
+</p>
+
+@if (Model.Assignments != null)
+{
+    Html.RenderPartial("_AssignmentsTable", Model.Assignments);
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

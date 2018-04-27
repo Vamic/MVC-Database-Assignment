@@ -1,0 +1,18 @@
+﻿@model Course
+
+@{
+    ViewBag.Title = "Edit Students";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Students</h2>
+
+@Html.Action("AddPeopleView", new { id = Model.Id, isStudent = true })
+
+@Html.Partial("_PeopleTable", Model.Students.ToList<Person>(), new ViewDataDictionary {
+    { "isStudent", true}
+})
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
